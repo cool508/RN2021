@@ -1,5 +1,174 @@
 ## #React_Natve 2021
 
+## 2021/04/30
+
+> 4. 리액트 네이티브에서 스타일 적용하고 관리하기
+
+<!-- 예제 4.3 -->
+<details>
+  <summary>예제 4.3) 컴포넌트의 스타일시트를 외부로 분리하기(component 폴더 내에 styles.js)</summary>
+  <br>
+  
+  ```javascript
+    import {StyleSheet} from 'react-native';
+    const styles = StyleSheet.create({
+      // styles 상수에 스타일 생성
+      container: {
+        // container 스타일을 생성하고 컴포넌트에서는 styles.container로 참조
+        marginTop: 150,
+        borderColor: '#ededed',
+        flexWrap: 'wrap',
+      },
+    });
+    
+    const buttons = StyleSheet.create({
+    // 두번째 스타일을 생성하고 button 상수로 저장
+    primary: {
+    // primary button을 위한 스타일 생성하고 컴포넌트에서는 buttons.primary로 참조
+        flex: 1,
+        height: 70,
+        borderColor: 'red',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginLeft: 20,
+        marginRight: 20,
+      }
+    });
+    
+    export {styles, buttons}; // styles와 buttons 모두 export해서 외부에서 사용할 수 있도록 한다.
+  ```
+</details>
+  
+<!-- 예제 4.4 -->
+<details>
+  <summary>예제 4.4) 외부 스타일시트 가져오기</summary>
+  <br>
+  
+  ```javascript
+  import React, { Component } from 'react'
+  import { Text, View, TouchableHighlight } from 'react-native'
+  import { styles, buttons } from './component/styles'
+  export default class App extends Component {
+    render() {
+      return (
+        // style.js 파일에 정의된 styles.container 스타일 참조
+        <View style = { styles.container }>
+          <TouchableHighlight styles = { buttons.primary }>
+            <Text>Sample Text</Text>
+          </TouchableHighlight>
+        </View>
+      )
+    }
+  }
+  ```
+</details>
+
+<!-- 예제 4.5 -->
+<details>
+  <summary>예제 4.5) 컴포넌트 파일에서 사용하게 될 외부로 분리한 스타일(styles.js)</summary>
+  <br>
+
+```javascript
+...
+export const Colors = {
+  dark: 'black',
+  light: 'white',
+};
+
+const baseContainerStyles = {
+  flex: 1,
+  justifyContent: 'center',
+  alignItems: 'center',
+};
+
+const baseBoxStyles = {
+  justifyContent: 'center',
+  alignItems: 'center',
+  borderWidth: 2,
+  width: 150,
+  height: 150,
+};
+
+const lightStyleSheet = StyleSheet.create({
+  container: {
+    ...baseContainerStyles,
+    backgroundColor: Colors.light,
+  },
+  box: {
+    ...baseBoxStyles,
+    borderColor: Colors.dark,
+  },
+});
+
+const darkStyleSheet = StyleSheet.create({
+  container: {
+    ...baseContainerStyles,
+    borderColor: Colors.dark,
+  },
+  box: {
+    ...baseBoxStyles,
+    backgroundColor: Colors.light,
+  },
+});
+
+export default function getStyleSheet(useDarkTheme) {
+  return useDarkTheme ? darkStyleSheet : lightStyleSheet;
+}
+...
+```
+
+</details>
+
+<!-- 예제 4.6 -->
+<details>
+  <summary>예제 4.6) 밝은색과 어두운색 테마를 토글하는 앱(App.js)</summary>
+  <br>
+
+```javascript
+import React, {Component} from 'react';
+import {Button, View, StyleSheet} from 'react-native';
+import getStyleSheet from './styles'; // 외부로 분리해 둔 getStyleSheet 함수 가져오기
+
+export default class App extends Component {
+  constructor(props) {
+    super(props);
+    this,
+      (state = {
+        darkTheme: false, // 기본 테마 색을 밝은색으로 컴포넌트의 state 초기화하기
+      });
+    this.toggleTheme = this.toggleTheme.bind(this); // 예외가 발생하지않도록 toggleTheme함수를 컴포넌트에 bind
+  }
+
+  toggleTheme() {
+    this.setState({darkTheme: !this.state.darkTheme}); // 호출 할 때 마다 스타일을 toggle
+  }
+  render() {
+    // 표시할 테마에 적합한 스타일시트를 가져오기 위해 getStyleSheet 함수 사용
+    const styles = getStyleSheet(this.state.darkTheme);
+    const backgroundColor = StyleSheet.flatten(styles.container)
+      .backgroundColor; // backgroundColor를 쉽게 사용하려면 StyleSheet의 flatten을 이용해서 StyleSheet객체를 JavaScript 객체로 변환
+
+    return (
+      // style.js 파일에 정의된 styles.container 스타일 참조
+      <View style={styles.container}>
+        {/* 프로필 카드를 수평축에서 중앙으로 정렬 */}
+        <View styles={styles.box}>
+          {/* 테마의 styles.box 참조 */}
+          <Button title={backgroundColor} onPress={this.toggleTheme} />
+          {/* 사용 중인 테마의 색상을 텍스트로 표시하고, 버튼이 클릭되면 toggleTheme 호출*/}
+        </View>
+      </View>
+    );
+  }
+}
+```
+
+</details>
+
+## 2021/04/23
+
+중간고사
+
 ## 2021/04/16
 
 > 2. todo 앱 레이아웃 작성하기( 이어서 하기)
@@ -59,7 +228,9 @@
 
 - 초기 state 지정
 - state 갱신
-  > 2.  props를 사용해 컴포넌트 데이터 다루기
+
+> 2.  props를 사용해 컴포넌트 데이터 다루기
+
 - 정적 props
 - 동적 props
 - props와 state의 구조 분해 할당(Destructuring)
