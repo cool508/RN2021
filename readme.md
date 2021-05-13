@@ -1,42 +1,108 @@
 ## #React_Natve 2021
 
+## 2021/05/07
+
+> 4. 리액트 네이티브에서 스타일 적용하고 관리하기
+
+<!-- 예제 4.7 -->
+<details>
+  <summary>예제 4.7) Profile Card 컴포넌트를 위한 초기 형태(App.js)</summary>
+  <br>
+  
+```javascript
+import React, { Component } from 'react';
+import { View, StyleSheet } from 'react-native';
+export default class App extends Component {
+  render() { 
+    return (
+      <View style = { styles.container }> 
+        {/* 자식 컴포넌트를 중앙 정렬하는 가장 바깥쪽의 View 컴포넌트 */}
+        <View styles = { styles.cardContainer } />
+      </View>
+    );
+  }
+}
+const profileCardColor = 'dodgerblue'; // 여러 곳에서 사용할 경우를 대비해서 프로필카드의 색상를 변수에 정의함
+const styles = StyleSheet.create({
+  container: { // 가장 바깥쪽 컴포넌트가 사용할 스타일
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  cardContainer: { // 프로필 카드에서 사용할 스타일
+    backgroundColor: profileCardColor,
+    width: 300,
+    height: 400
+  }
+});
+```
+</details>
+
+<!-- border 속성 지정 -->
+<details>
+  <summary>중간고사 리뷰</summary>
+  <br>
+  1. Class형태의 component의 선언방법
+  <br>
+  2. 함수 형태의 component의 선언방법
+  <br>
+  3. state 설정 및 초기화 방법
+  <br>
+  4. props의 개념 및 전달 경로
+  <br>
+  5. state에 초기화된 값을 props로 전달하는 방법
+  <br>
+  6. 일반 변수로 초기화 된 값을 props로 전달하는 방법
+  <br>
+  7. 구조분해(비구조화) 할당(Destructuring Assignment)을 통한 변수명 재할당
+  <br>
+  [참고](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment)
+  <br>
+  8. 필요한 component만 import하기
+  <br>
+    9. Props를 전달받아 사용하기
+  <br>
+  10. index.js에 App 지정
+</details>
+
 ## 2021/04/30
 
 > 4. 리액트 네이티브에서 스타일 적용하고 관리하기
 
 <!-- 예제 4.3 -->
 <details>
-  <summary>예제 4.3) 컴포넌트의 스타일시트를 외부로 분리하기(component 폴더 내에 styles.js)</summary>
-  <br>
-  
-  ```javascript
-    import {StyleSheet} from 'react-native';
-    const styles = StyleSheet.create({
-      // styles 상수에 스타일 생성
-      container: {
-        // container 스타일을 생성하고 컴포넌트에서는 styles.container로 참조
-        marginTop: 150,
-        borderColor: '#ededed',
-        flexWrap: 'wrap',
-      },
-    });
-    
-    const buttons = StyleSheet.create({
-    // 두번째 스타일을 생성하고 button 상수로 저장
-    primary: {
+<summary>예제 4.3) 컴포넌트의 스타일시트를 외부로 분리하기(component 폴더 내에 styles.js)</summary>
+<br>
+
+```javascript
+import {StyleSheet} from 'react-native';
+const styles = StyleSheet.create({
+  // styles 상수에 스타일 생성
+  container: {
+    // container 스타일을 생성하고 컴포넌트에서는 styles.container로 참조
+    marginTop: 150,
+    borderColor: '#ededed',
+    flexWrap: 'wrap',
+  },
+});
+
+const buttons = StyleSheet.create({
+  // 두번째 스타일을 생성하고 button 상수로 저장
+  primary: {
     // primary button을 위한 스타일 생성하고 컴포넌트에서는 buttons.primary로 참조
-        flex: 1,
-        height: 70,
-        borderColor: 'red',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginLeft: 20,
-        marginRight: 20,
-      }
-    });
-    
-    export {styles, buttons}; // styles와 buttons 모두 export해서 외부에서 사용할 수 있도록 한다.
-  ```
+    flex: 1,
+    height: 70,
+    borderColor: 'red',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 20,
+    marginRight: 20,
+  },
+});
+
+export {styles, buttons}; // styles와 buttons 모두 export해서 외부에서 사용할 수 있도록 한다.
+```
+
 </details>
   
 <!-- 예제 4.4 -->
