@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, View, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 
 export default class App extends Component {
 
@@ -15,7 +15,7 @@ export default class App extends Component {
 
   const profileCardColor = 'dodgerblue'; // 여러 곳에서 사용할 경우를 대비해서 프로필카드의 색상를 변수에 정의함
 
-  const style = StyleSheet.create({
+  const styles = StyleSheet.create({
     container: { // 가장 바깥쪽 컴포넌트가 사용할 스타일
       flex: 1,
       justifyContent: 'center',
