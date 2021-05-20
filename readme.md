@@ -1,5 +1,169 @@
 ## #React_Natve 2021
 
+## 2021/05/14
+
+- props의 다루기 부족하다면 예제 2.2 천천히 다시보기
+
+> 4.2 View 컴포넌트에 스타일 적용하기
+
+<!-- 예제 4.14 -->
+<details>
+  <summary>예제 4.14) 프로필 카드의 스타일을 수정해서 레이아웃을 변경함 (app/App.js)</summary>
+  <br>
+  
+```javascript
+  import React, { Component } from 'react';
+  import { Image, StyleSheet, View } from 'react-native'; // react-native에서 Image 컴포넌트 가져오기
+  
+   class App extends Component {
+    render() { 
+      return (
+        <View style={styles.container}>
+          <View style={styles.cardContainer}>
+            <View style={styles.cardImageContainer}>
+              <Image style={styles.cardImage}        
+                      source={require('./user.png')}/> 
+                      {/* user.png 파일은 앱의 코드와 같은 디렉토리에 위치함 */}
+            </View>
+          </View>
+        </View>
+      );
+    }
+  }
+  
+  const profileCardColor = 'dodgerblue';
+  
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
+    cardContainer: { // 프로필카드에 border 속성 추가
+      alignItems: 'center', // 프로필 카드를 수평축에서 중앙으로 정렬
+      borderColor: 'black',
+      borderWidth: 3,
+      borderStyle: 'solid', // 사용자의 이미지를 수평축에서 중앙으로 정렬
+      borderRadius: 20,
+      backgroundColor: profileCardColor,
+      width: 300,
+      height: 400
+    },
+    cardImageContainer: {   // 이미지 컨테이너(image contanier)는 120x120 크기의 정사각형. borderRadius   속성을 60(120의 반)으로 지정해서 원으로 나타냄
+      alignItems: 'center', // 사용자의 이미지를 수평축에서 중앙으로 정렬
+      backgroundColor: 'white',
+      borderWidth: 3,
+      borderColor: 'black',
+      width: 120,
+      height: 120,
+      borderRadius: 60,
+      marginTop: 30,  // 프로필 카드와 원의 상단의 간격
+      paddingTop: 15  // 원과 안쪽 이미지 사이의 간격
+    },
+    cardImage: {  // 이미지에 적용한 스타일
+        width: 80,
+        height: 80
+    }
+  });
+  
+  export default App
+```
+</details>
+<!-- 예제 4.10 -->
+<details>
+  <summary>예제 4.10) 프로필 카드에 border 속성 적용하기 (app/App.js)</summary>
+  <br>
+  
+```javascript
+  import React, { Component } from 'react';
+  import { Image, StyleSheet, View } from 'react-native'; // react-native에서 Image 컴포넌트 가져오기
+  
+   class App extends Component {
+    render() { 
+      return (
+        <View style={styles.container}>
+          <View style={styles.cardContainer}>
+            <View style={styles.cardImageContainer}>
+              <Image style={styles.cardImage}        
+                      source={require('./user.png')}/> 
+                      {/* user.png 파일은 앱의 코드와 같은 디렉토리에 위치함 */}
+            </View>
+          </View>
+        </View>
+      );
+    }
+  }
+  
+  const profileCardColor = 'dodgerblue';
+  
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
+    cardContainer: { // 프로필카드에 border 속성 추가
+      borderColor: 'black',
+      borderWidth: 3,
+      borderStyle: 'solid', // 사용자의 이미지를 수평축에서 중앙으로 정렬
+      borderRadius: 20,
+      backgroundColor: profileCardColor,
+      width: 300,
+      height: 400
+    },
+    cardImageContainer: {   // 이미지 컨테이너(image contanier)는 120x120 크기의 정사각형. borderRadius 속성을 60(120의 반)으로 지정해서 원으로 나타냄
+      backgroundColor: 'white',
+      borderWidth: 3,
+      borderColor: 'black',
+      width: 120,
+      height: 120,
+      borderRadius: 60,
+    },
+    cardImage: {  // 이미지에 적용한 스타일
+        width: 80,
+        height: 80
+    }
+  });
+  
+  export default App
+```
+</details>
+
+<details>
+  <summary>border 속성 지정하기</summary>
+  <br>
+   borderColor,	borderRadius,	borderStyle, borderWidth 속성 존재
+   borderColor, borderStyle, borderWidth은 속성에 방향( top - right - bottom - left )을 추가하여 세부적 속성 만듬
+   
+   ```javascript
+    <Example style={{borderWidth: 1, borderLeftColor: 'red',borderStyle: 'dashed'}}>
+   ```
+   borderRadius를 이용하여 모양 만들기
+   ```javascript
+    // 한번에 지정 가능 -> borderRadius : [TopRight], [BottomRight], [BottomLeft], [TopLeft]
+    <Example style={{borderRadius: 60}}>
+    <Example style={{borderTopRightRadius: 20, borderBottomRightRadius: 20}}>
+   ```
+</details>
+<details>
+  <summary> Margin과 Padding 지정하기</summary>
+  <br>
+   margin 속성 padding CSS와 비슷
+  <br>
+   
+   ```javascript
+    <Example style={{margin: 20 ,padding: 50}}>
+    <Example style={{marginLeft: 20 ,paddingRight: 50}}>
+   ```
+  <br>
+   Position을 이용하여 컴포넌트 배치 : CSS와 유사하지만 CSS만큼 다양한 옵션( static, fixed) 지원 X 
+  <br>
+   
+   ```javascript
+    <Example style={{position: 'absolute', right: 0, bottom: 0}}>
+   ```
+</details>
+
 ## 2021/05/07
 
 > 4. 리액트 네이티브에서 스타일 적용하고 관리하기
@@ -8,34 +172,37 @@
 <details>
   <summary>예제 4.7) Profile Card 컴포넌트를 위한 초기 형태(App.js)</summary>
   <br>
-  
+
 ```javascript
-import React, { Component } from 'react';
-import { View, StyleSheet } from 'react-native';
+import React, {Component} from 'react';
+import {View, StyleSheet} from 'react-native';
 export default class App extends Component {
-  render() { 
+  render() {
     return (
-      <View style = { styles.container }> 
+      <View style={styles.container}>
         {/* 자식 컴포넌트를 중앙 정렬하는 가장 바깥쪽의 View 컴포넌트 */}
-        <View styles = { styles.cardContainer } />
+        <View styles={styles.cardContainer} />
       </View>
     );
   }
 }
 const profileCardColor = 'dodgerblue'; // 여러 곳에서 사용할 경우를 대비해서 프로필카드의 색상를 변수에 정의함
 const styles = StyleSheet.create({
-  container: { // 가장 바깥쪽 컴포넌트가 사용할 스타일
+  container: {
+    // 가장 바깥쪽 컴포넌트가 사용할 스타일
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
-  cardContainer: { // 프로필 카드에서 사용할 스타일
+  cardContainer: {
+    // 프로필 카드에서 사용할 스타일
     backgroundColor: profileCardColor,
     width: 300,
-    height: 400
-  }
+    height: 400,
+  },
 });
 ```
+
 </details>
 
 <!-- border 속성 지정 -->
