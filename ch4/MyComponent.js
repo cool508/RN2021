@@ -7,7 +7,7 @@ import getStyleSheet from './MyComponentStyles'; // 외부로 분리해 둔 getS
 export default class MyComponent extends Component {
   constructor(props) {
     super(props);
-    this,state = {
+    this.state = {
       darkTheme : false // 기본 테마 색을 밝은색으로 컴포넌트의 state 초기화하기
     }
     this.toggleTheme = this.toggleTheme.bind(this); // 예외가 발생하지않도록 toggleTheme함수를 컴포넌트에 bind
