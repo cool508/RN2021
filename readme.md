@@ -1,5 +1,368 @@
 ## #React_Natve 2021
 
+## 2021/05/21
+
+> 6. 내비게이션
+
+- React Native에는 내비게이션 라이브러리 포함X ∴ 오픈소스 라이브러리 사용
+- Wix 개발자들이 개발하고 관리하는 오픈소스 라이브러리
+<details>
+  <summary>종류</summary>
+  
+  * 탭(Tab) 내비게이션 : 화면 상단 or 하단에 탭 존재, 탭 누르면 탭과 연결된 화면 이동
+  * 스택(stack) 내비게이션 : 현 화면에서 다른 화면 이동, 스택에 있는 이전 or 다음 화면 이동O, 애니메이션도 함께 구현
+  * 드로어(drawer) 내비게이션 : 화면 왼쪽 or 오른쪽에서 나오는 메뉴, 옵션 목록 표시, 옵션 선택시 드로어 닫히고 새 화면 이동
+</details>
+
+---
+
+> 5. 고급 스타일링 기법
+
+> 5.1 플랫폼별 크기와 스타일
+
+컴포넌트에 적용한 스타일이 플랫폼별로 다르게 보이거나 동작할 수 있다.
+
+<details>
+  <summary> 픽셀, 포인트, DP(DPs) </summary>
+  
+  * Pixels (픽셀) : 디스플레이에 표현되는 프로그래밍 가능한 가장 작은 단위, RGB(빨,초,파)의 색 요소로 구성, PPI가 다른 디바이스에서 밀도가 클수록 작게 표현
+  * DP : 안드로이드 사이즈 단위, PPI가 다른 디바이스에서 동일한 비율 표현 
+  * Points : iOS 사이즈 단위, DP 와 같은 역할
+</details>
+<details>
+  <summary>shadowPropTypesIOS와 elevation 속성으로 음영 넣기</summary>
+  
+  * shadowPropTypesIOS : iOS에서 음영 추가
+  * elevation : android에서 음영 추가, 큰 효과는 없음 ∴ 포기하거나 npm이나 yarn 컴포넌트 설치
+  * Platform.select를 사용함
+    ```javascript
+      ...Platform.select({ 
+      ios: {
+        shadowColor: 'black',
+        shadowOffset: {
+          height: 10
+        },
+        shadowOpacity: 1
+      },
+      android: {
+        borderWidth: 3,
+        borderColor: 'black',
+        elevation: 15
+      }
+    })
+    ```
+</details>
+<!-- 예제 5.1 -->
+<details>
+  <summary>예제 5.1 ProfileCard에 음영 효과 넣기</summary>
+
+```javascript
+import React, {Component} from 'react';
+
+import {Image, StyleSheet, View, Text, Platform} from 'react-native'; // 프로그램에서 플랙폼에 따라 스타일을 선택 할 수 있도록 Platform 유틸리티 가져오기
+  ...
+const styles = StyleSheet.create({
+  ...
+  cardContainer: {
+    ...
+    height: 400,
+    ...Platform.select({
+      // 플랫폼에 따라 카드 컨테이너에 음영 넣기
+      ios: {
+        shadowColor: 'black',
+        shadowOffset: {
+          height: 10,
+        },
+        shadowOpacity: 1,
+      },
+      android: {
+        elevation: 15,
+      },
+    }),
+  },
+  cardImageContainer: {
+    ...
+    paddingTop: 15,
+    ...Platform.select({
+      // 원형 이미지에 음영 넣기
+      ios: {
+        shadowColor: 'black',
+        shadowOffset: {
+          height: 10,
+        },
+        shadowOpacity: 1,
+      },
+      android: {
+        borderWidth: 3,
+        borderColor: 'black',
+        elevation: 15,
+      },
+    })
+  },
+  ...
+```
+
+</details>
+<br>
+
+> 5.2 컴포넌트를 이동, 회전, 크기 변경, 기울이기
+
+<details>
+  <summary>transform</summary>
+  
+    ```javascript
+      transform: [{
+        perspective: // 사용자와 화면 사이의 거리를 조정
+        translateX, translateY: // x 축 또는 y축 따라 이동
+        rotateX, rotateY, rotateZ: // x 축 또는 y축 또는 z 축 따라 화전
+        scale, scaleX, scaleY: // 물체의 크기를 변경
+        skewX, skewY: // x축과 y축을 따라 기울이기
+      }]
+    ```
+</details>
+<br>
+
+> 5.3 flexbox를 이용해서 컴포넌트 배치
+
+---
+
+> 4.3 Text 컴포넌트에 스타일 적용하기
+
+<!-- 예제 4.17 -->
+<details>
+  <summary>예제 4.17) 프로필 카드의 Text 폰트 스타일 적용하기 (app/App.js)</summary>
+  <br>
+  
+```javascript
+  import React, { Component } from 'react';
+  import { Image, StyleSheet, View, Text} from 'react-native'; 
+  
+   class App extends Component {
+    render() { 
+      return (
+        <View style={styles.container}>
+          <View style={styles.cardContainer}>
+            <View style={styles.cardImageContainer}>
+              <Image style={styles.cardImage}        
+                      source={require('./user.png')}/> 
+            </View>
+            <View>
+              <Text style={styles.cardName}>
+                J.B BAE
+              </Text>
+            </View>
+            <View style={styles.cardOccupationContainer}>
+              <Text style={styles.cardOccupation}>
+                React Native Developer
+              </Text>
+            </View>
+            <View>
+              <Text style={styles.cardDescription}>
+                J.B is really great javaScript developer.
+                He loves using JS to build React Native applications for iOS and Android. 
+              </Text>
+            </View>
+          </View>
+        </View>
+      );
+    }
+  }
+  
+  const profileCardColor = 'dodgerblue';
+  
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
+    cardContainer: { 
+      alignItems: 'center', 
+      borderColor: 'black',
+      borderWidth: 3,
+      borderStyle: 'solid', 
+      borderRadius: 20,
+      backgroundColor: profileCardColor,
+      width: 300,
+      height: 400
+    },
+    cardImageContainer: {   
+      alignItems: 'center', 
+      backgroundColor: 'white',
+      borderWidth: 3,
+      borderColor: 'black',
+      width: 120,
+      height: 120,
+      borderRadius: 60,
+      marginTop: 30,  
+      paddingTop: 15  
+    },
+    cardImage: {  
+      width: 80,
+      height: 80
+    },
+    cardName: { 
+      color: 'white',
+      fontWeight: 'bold', // 이름 부분 bold 처리
+      fontSize: 24, // 이름 부분 폰트크기 24
+      marginTop: 30
+    },
+    cardOccupationContainer: { 
+      borderColor: 'black',
+      borderWidth: 3,
+    },
+    cardOccupation: { 
+      fontWeight: 'bold',
+      marginTop: 10,
+      marginBottom: 10
+    },
+    cardDescription: { 
+      fontStyle: 'italic', // 설명 부분 이텔릭체 사용
+      marginTop: 10,
+      marginRight: 40,
+      marginLeft: 40,
+      marginBottom: 10
+    }
+  });
+  
+  export default App
+```
+</details>
+<details>
+  <summary> Text 컴포넌트 VS View 컴포넌트 </summary>
+  View에서 사용되는 대부분의 스타일을 Text에서도 사용O (Flex 속성X)
+  <br>
+  But 반대로 Text에서 사용하는 스타일은 View에서 사용 X
+</details>
+<details>
+  <summary> 폰트 스타일 </summary>
+  
+  * fontFamily : CSS와 다르게 fontFamily 속성에 여러 폰트 지정X
+    * iOS에서는 monospace 옵션 사용X -> 사용 시 오류 발생(“Unrecognized font family ‘monospace’”)
+  * fontSize : Text 요소의 텍스트 크기 조정, 기본값 14
+  * fontStyle : 'normal' 또는 'italic' 만 사용, 기본값 'normal' 
+  * fontWeghit : 폰트의 두께 의미, 기본값 'normal' 또는 400
+</details>
+<details>
+  <summary> 텍스트 장식하기 </summary>
+  
+  * Text 높이 : lineHeight 속성에 값 지정
+  * 수평 정렬 : textAlign 속성 auto, center, right, left, justify
+    * jusify 는 iOS 에서만 사용 가능
+  * 밑줄 또는 취소선
+    * textDecorationLine 속성 기본값 'none', 'underline', 'linethrough', 'underline line-through'
+    * android와 iOS의 취소선 UI 다름
+  * 텍스트에 음영 넣기 : 폰트의 두께 의미, 기본값 'normal' 또는 400
+    ```javascript
+      textShadowColor:  // 색상
+      textShadowOffset: // 오프셋(offset) : 음영 효과를 갖는 컴포넌트에서 음영 위치 지정 
+      textShadowRadius: // 반경(Radius) : 음영을 얼마나 흐릿하게 표시 할지 지정
+    ```
+</details>
+<!-- 예제 4.15 -->
+<details>
+  <summary>예제 4.15) 프로필 카드에 텍스트 추가하기 (app/App.js)</summary>
+  <br>
+  
+```javascript
+  import React, { Component } from 'react';
+  import { Image, StyleSheet, View, Text} from 'react-native'; 
+  
+   class App extends Component {
+    render() { 
+      return (
+        <View style={styles.container}>
+          <View style={styles.cardContainer}>
+            <View style={styles.cardImageContainer}>
+              <Image style={styles.cardImage}        
+                      source={require('./user.png')}/> 
+            </View>
+            <View>
+              <Text style={styles.cardName}>
+                {/* 인물 이름을 보여주는 Text 컴포넌트 */}
+                J.B BAE
+              </Text>
+            </View>
+            <View style={styles.cardOccupationContainer}>
+            {/* 직업을 표시하는 Text 컴포넌트의 컨테이너, 직업과 프로필 소개를 구분하는 하단 테두리 (bottom border)을 지정 */}
+              <Text style={styles.cardOccupation}>
+              {/* 작업을 표시하는 Text */}
+                React Native Developer
+              </Text>
+            </View>
+            <View>
+              <Text style={styles.cardDescription}>
+              {/* 인물의 프로필 설명 */}
+                J.B is really great javaScript developer.
+                He loves using JS to build React Native applications for iOS and Android. 
+              </Text>
+            </View>
+          </View>
+        </View>
+      );
+    }
+  }
+  
+  const profileCardColor = 'dodgerblue';
+  
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
+    cardContainer: {
+      alignItems: 'center',
+      borderColor: 'black',
+      borderWidth: 3,
+      borderStyle: 'solid', 
+      borderRadius: 20,
+      backgroundColor: profileCardColor,
+      width: 300,
+      height: 400
+    },
+    cardImageContainer: {   
+      alignItems: 'center', 
+      backgroundColor: 'white',
+      borderWidth: 3,
+      borderColor: 'black',
+      width: 120,
+      height: 120,
+      borderRadius: 60,
+      marginTop: 30,  
+      paddingTop: 15  
+    },
+    cardImage: { 
+      width: 80,
+      height: 80
+    },
+    cardName: { // 이름 표시 Text 컴포넌트의 색상은 white
+      color: 'white',
+      marginTop: 30
+    },
+    cardOccupationContainer: { // 작업 영역의 스타일
+      borderColor: 'black',
+      borderWidth: 3,
+      borderTopWidth: 0,
+      borderRightWidth: 0,
+      borderLeftWidth: 0
+    },
+    cardOccupation: { // 작업을 표시하는 Text 컴포넌트에 적용된 스타일(위치를 지정하는 스타일만 포함)
+      marginTop: 10,
+      marginBottom: 10
+    },
+    cardDescription: { // 프로필 Text 스타일
+      marginTop: 10,
+      marginRight: 40,
+      marginLeft: 40,
+      marginBottom: 10
+    }
+  });
+  
+  export default App
+```
+</details>
+
 ## 2021/05/14
 
 - props의 다루기 부족하다면 예제 2.2 천천히 다시보기
