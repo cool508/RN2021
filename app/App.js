@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Image, StyleSheet, View, Text, ViewComponent} from 'react-native'; // react-native에서 Image 컴포넌트 가져오기
-import { styles } from './styles';
+import { Image, StyleSheet, View, Text} from 'react-native'; // react-native에서 Image 컴포넌트 가져오기
 
  class App extends Component {
   render() { 
@@ -73,20 +72,21 @@ const styles = StyleSheet.create({
   },
   cardName: { // 이름 표시 Text 컴포넌트의 색상은 white
     color: 'white',
+    fontWeight: 'bold', // 이름 부분 bold 처리
+    fontSize: 24, // 이름 부분 폰트크기 24
     marginTop: 30
   },
   cardOccupationContainer: { // 작업 영역의 스타일
     borderColor: 'black',
     borderWidth: 3,
-    borderTopWidth: 0,
-    borderRightWidth: 0,
-    borderLeftWidth: 0
   },
   cardOccupation: { // 작업을 표시하는 Text 컴포넌트에 적용된 스타일(위치를 지정하는 스타일만 포함)
+    fontWeight: 'bold',
     marginTop: 10,
     marginBottom: 10
   },
   cardDescription: { // 프로필 Text 스타일
+    fontStyle: 'italic', // 설명 부분 이텔릭체 사용
     marginTop: 10,
     marginRight: 40,
     marginLeft: 40,
