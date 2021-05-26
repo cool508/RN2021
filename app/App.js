@@ -74,7 +74,13 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold', // 이름 부분 bold 처리
     fontSize: 24, // 이름 부분 폰트크기 24
-    marginTop: 30
+    marginTop: 30,
+    textShadowColor: 'black', // 음영 색상 지정
+    textShadowOffset: { // 음영의 offset 지정 오른쪽 하단으로 음영
+      height: 2,
+      width: 2
+    },
+    textShadowRadius: 3 // 음영의 반경
   },
   cardOccupationContainer: { // 작업 영역의 스타일
     borderColor: 'black',
