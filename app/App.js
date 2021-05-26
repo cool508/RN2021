@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, StyleSheet, View, Text} from 'react-native'; // react-native에서 Image 컴포넌트 가져오기
+import { Image, StyleSheet, View, Text, Platform} from 'react-native'; // 프로그램에서 플랙폼에 따라 스타일을 선택 할 수 있도록 Platform 유틸리티 가져오기
 
  class App extends Component {
   render() { 
@@ -53,7 +53,19 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     backgroundColor: profileCardColor,
     width: 300,
-    height: 400
+    height: 400,
+    ...Platform.select({ // 플랫폼에 따라 카드 컨테이너에 음영 넣기
+      ios: {
+        shadowColor: 'black',
+        shadowOffset: {
+          height: 10
+        },
+        shadowOpacity: 1
+      },
+      android: {
+        elevation: 15
+      }
+    })
   },
   cardImageContainer: {   // 이미지 컨테이너(image contanier)는 120x120 크기의 정사각형. borderRadius 속성을 60(120의 반)으로 지정해서 원으로 나타냄
     alignItems: 'center', // 사용자의 이미지를 수평축에서 중앙으로 정렬
@@ -64,7 +76,21 @@ const styles = StyleSheet.create({
     height: 120,
     borderRadius: 60,
     marginTop: 30,  // 프로필 카드와 원의 상단의 간격
-    paddingTop: 15  // 원과 안쪽 이미지 사이의 간격
+    paddingTop: 15,  // 원과 안쪽 이미지 사이의 간격
+    ...Platform.select({ // 원형 이미지에 음영 넣기
+      ios: {
+        shadowColor: 'black',
+        shadowOffset: {
+          height: 10
+        },
+        shadowOpacity: 1
+      },
+      android: {
+        borderWidth: 3,
+        borderColor: 'black',
+        elevation: 15
+      }
+    })
   },
   cardImage: {  // 이미지에 적용한 스타일
       width: 80,
