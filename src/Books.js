@@ -1,8 +1,13 @@
 import React from 'react'
-import { Text, View, ScrollView, StyleSheet } from 'react-native'
+import { Text, View, ScrollView, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
 
+import { addBook } from './actions' // actions 파일의 addBook 함수 가져오기
 import { connect } from 'react-redux' // 'react-redux'에서 connect 가져오기
 
+const initialState = {  // name과 author 필드를 포함하는 InitialState 객체 만들기
+  name: '',
+  author: ''
+}
 class Books extends React.Component<{}> {
   render() {
     const { books } = this.props // connect함수가 books 배열을 반환하므로(이 예제의 하단 부분 참조)이 배열을 props로 참조 할 수 있다.
